@@ -43,7 +43,7 @@ module BootstrapPagination
     end
 
     def gap
-      tag("li", link(tag("span", ELLIPSIS,{'aria-hidden': 'true'})+tag("span", ELLIPSIS,{class: 'sr-only'}), '#', link_options.merge(class: "page-link",'aria-label': text)), class: "page-item disabled")
+      tag("li", link(tag("span", ELLIPSIS,{'aria-hidden': 'true'})+tag("span", ELLIPSIS,{class: 'sr-only'}), '#', {class: "page-link",'aria-label': text}), class: "page-item disabled")
     end
 
     def previous_page
