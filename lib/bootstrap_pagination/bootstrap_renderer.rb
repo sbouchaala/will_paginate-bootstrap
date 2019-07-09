@@ -1,5 +1,3 @@
-require "bootstrap_pagination/version"
-
 module BootstrapPagination
   # Contains functionality shared by all renderer classes.
   module BootstrapRenderer
@@ -28,9 +26,9 @@ module BootstrapPagination
       link_options = @options[:link_options] || {}
 
       if page == current_page
-        tag("li", tag("span", page), class: "active")
+        tag("li", link(page, '#', link_options.merge(class: "page-link",rel: rel_value(page))), class: "page-item active")
       else
-        tag("li", link(page, page, link_options.merge(rel: rel_value(page))))
+        tag("li", link(page, page, link_options.merge(class: "page-link",rel: rel_value(page))),class: "page-item")
       end
     end
 
@@ -38,14 +36,14 @@ module BootstrapPagination
       link_options = @options[:link_options] || {}
 
       if page
-        tag("li", link(text, page, link_options), class: classname)
+        tag("li", link(tag("span", classname == 'prev' ? '&laquo;' : '&raquo;',{'aria-hidden': 'true'})+tag("span", text,{class: 'sr-only'}), page, link_options.merge(class: "page-link",'aria-label': text)), class: "%s page-item" % classname)
       else
-        tag("li", tag("span", text), class: "%s disabled" % classname)
+        tag("li", link(tag("span", classname == 'prev' ? '&laquo;' : '&raquo;',{'aria-hidden': 'true'})+tag("span", text,{class: 'sr-only'}), '#', link_options.merge(class: "page-link",'aria-label': text)), class: "%s page-item disabled" % classname)
       end
     end
 
     def gap
-      tag("li", tag("span", ELLIPSIS), class: "disabled")
+      tag("li", link(tag("span", ELLIPSIS,{'aria-hidden': 'true'})+tag("span", ELLIPSIS,{class: 'sr-only'}), '#', link_options.merge(class: "page-link",'aria-label': text)), class: "page-item disabled")
     end
 
     def previous_page
